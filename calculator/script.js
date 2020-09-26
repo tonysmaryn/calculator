@@ -3,6 +3,7 @@ class Calculator {
         this.previousOperandTextElement = previousOperandTextElement;
         this.currentOperandTextElement = currentOperandTextElement;
         this.clear();
+        this.currentOperand = '';
     }
 
     clear() {
@@ -16,23 +17,51 @@ class Calculator {
     }
 
     appendNumber(number) {
+        if (this.currentOperand.length > 14) return;
         if (number === '.' && this.currentOperand.includes('.')) return;
         this.currentOperand = this.currentOperand.toString() + number.toString();
     }
 
     chooseOperation(operation) {
-        if (this.currentOperand === '') return;
-        if (this.previousOperand !== '') {
+        if (operation === '√') {
+            this.computeSqrt();
+            if (this.previousOperand !== '') {
+                this.previousOperand = `${this.previousOperand} ${this.operation}`;
+            }
+            this.operation = operation;
+            return;
+        }
+        if (this.currentOperand === '' && this.previousOperand === '') return;
+        if (this.previousOperand !== '' && this.currentOperand !== '') {
             this.compute();
         }
-        this.operation = operation;
-        this.previousOperand = this.currentOperand;
-        this.currentOperand = '';
+        if (this.currentOperand === '' && this.previousOperand !== '') {
+            this.operation = operation;
+            this.previousOperand = this.previousOperand;
+            this.currentOperand = this.currentOperand;
+        } else {
+            this.operation = operation;
+            this.previousOperand = this.currentOperand;
+            this.currentOperand = '';
+        }
+    }
+
+    computeSqrt() {
+        this.currentOperand = Math.sqrt(this.currentOperand);
+        console.log(this.currentOperand);
+
     }
 
     compute() {
         let computation;
-        const prev = parseFloat(this.previousOperand);
+        let prev;
+        if (this.operation === '√') {
+            const parser = this.previousOperand.split(' ');
+            prev = parseFloat(parser[0]);
+            this.operation = parser[1];
+        } else {
+            prev = parseFloat(this.previousOperand);
+        }
         const curr = parseFloat(this.currentOperand);
         if (isNaN(prev) || isNaN(curr)) return;
         switch (this.operation) {
@@ -45,8 +74,15 @@ class Calculator {
             case '*':
                 computation = prev * curr;
                 break;
-            case '/':
-                computation = prev / curr;
+            case '÷':
+                if (curr === 0) {
+                    computation = 'Error'
+                } else {
+                    computation = prev / curr;
+                }
+                break;
+            case '^':
+                computation = Math.pow(prev, curr);
                 break;
             default:
                 return;
@@ -74,12 +110,24 @@ class Calculator {
     }
 
     updateDisplay() {
-        this.currentOperandTextElement.innerText = this.getDisplayNumber(this.currentOperand);
-        if (this.operation != null) {
-            this.previousOperandTextElement.innerText =
-                `${this.getDisplayNumber(this.previousOperand)} ${this.operation}`;
+        if (this.currentOperand === 'Error') {
+            currentOperandTextElement.innerText = this.currentOperand;
+            previousOperandTextElement.innerText = '';
+            this.currentOperand = '';
+            this.previousOperand = ''
+            this.operation = undefined;
+        } else if (this.operation === '√') {
+            this.previousOperandTextElement.innerText = `${this.previousOperand} ${this.operation}${Math.pow(this.currentOperand, 2)}`;
+            this.currentOperandTextElement.innerText = this.currentOperand;
         }
-        else this.previousOperandTextElement.innerText = ''
+        else {
+            this.currentOperandTextElement.innerText = this.getDisplayNumber(this.currentOperand);
+            if (this.operation != null) {
+                this.previousOperandTextElement.innerText =
+                    `${this.getDisplayNumber(this.previousOperand)} ${this.operation}`;
+            }
+            else this.previousOperandTextElement.innerText = ''
+        }
     }
 }
 
