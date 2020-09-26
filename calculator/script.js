@@ -83,7 +83,10 @@ class Calculator {
                 break;
             case '÷':
                 if (curr === 0) {
-                    computation = 'Error'
+                    this.currentOperand = 'Error';
+                    this.previousOperand = '';
+                    this.operation = undefined;
+                    return;
                 } else {
                     computation = prev / curr;
                 }
