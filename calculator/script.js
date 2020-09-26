@@ -47,9 +47,11 @@ class Calculator {
     }
 
     computeSqrt() {
-        this.currentOperand = Math.sqrt(this.currentOperand);
-        console.log(this.currentOperand);
-
+        if (this.currentOperand < 0) {
+            this.currentOperand = 'Error';
+        } else {
+            this.currentOperand = Math.sqrt(this.currentOperand);
+        }
     }
 
     compute() {
@@ -129,6 +131,16 @@ class Calculator {
             else this.previousOperandTextElement.innerText = ''
         }
     }
+
+    currentClear() {
+        this.currentOperand = ' ';
+    }
+
+    signed() {
+        if (this.currentOperand !== '') {
+            this.currentOperand = parseFloat(this.currentOperand) * (-1);
+        }
+    }
 }
 
 const numberButtons = document.querySelectorAll('[data-number]');
@@ -138,6 +150,8 @@ const deleteButton = document.querySelector('[data-delete');
 const allClearButton = document.querySelector('[data-all-clear]');
 const previousOperandTextElement = document.querySelector('[data-previous-operand]');
 const currentOperandTextElement = document.querySelector('[data-current-operand]');
+const currentClearButton = document.querySelector('[data-current-clear]');
+const signButton = document.querySelector('[data-sign]');
 
 const calculator = new Calculator(previousOperandTextElement, currentOperandTextElement);
 
@@ -169,3 +183,14 @@ deleteButton.addEventListener('click', () => {
     calculator.delete();
     calculator.updateDisplay();
 });
+
+currentClearButton.addEventListener('click', () => {
+    calculator.currentClear();
+    calculator.updateDisplay();
+});
+
+signButton.addEventListener('click', () => {
+    calculator.signed();
+    calculator.updateDisplay();
+});
+
