@@ -4,25 +4,30 @@ class Calculator {
         this.currentOperandTextElement = currentOperandTextElement;
         this.clear();
         this.currentOperand = '';
+        this.isComputed = false;
     }
 
     clear() {
         this.previousOperand = '';
         this.currentOperand = '';
         this.operation = undefined;
+        this.isComputed = false;
     }
 
     delete() {
+        if (this.isComputed) return;
         this.currentOperand = this.currentOperand.toString().slice(0, -1);
     }
 
     appendNumber(number) {
+        if (this.isComputed) return;
         if (this.currentOperand.length > 14) return;
         if (number === '.' && this.currentOperand.includes('.')) return;
         this.currentOperand = this.currentOperand.toString() + number.toString();
     }
 
     chooseOperation(operation) {
+        this.isComputed = false;
         if (operation === '√') {
             this.computeSqrt();
             if (this.previousOperand !== '') {
@@ -89,7 +94,7 @@ class Calculator {
             default:
                 return;
         }
-        this.currentOperand = computation;
+        this.currentOperand = computation.toFixed(10).replace(/0*$/, '');
         this.previousOperand = '';
         this.operation = undefined;
     }
@@ -134,12 +139,17 @@ class Calculator {
 
     currentClear() {
         this.currentOperand = ' ';
+        this.isComputed = false;
     }
 
     signed() {
         if (this.currentOperand !== '') {
             this.currentOperand = parseFloat(this.currentOperand) * (-1);
         }
+    }
+
+    setIsComputed(){
+        this.isComputed = true;
     }
 }
 
@@ -172,6 +182,7 @@ operationButtons.forEach(button => {
 equalsButton.addEventListener('click', () => {
     calculator.compute();
     calculator.updateDisplay();
+    calculator.setIsComputed();
 });
 
 allClearButton.addEventListener('click', () => {
