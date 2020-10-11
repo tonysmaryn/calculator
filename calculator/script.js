@@ -20,7 +20,9 @@ class Calculator {
     }
 
     appendNumber(number) {
-        if (this.isComputed) return;
+        if (this.isComputed){
+            this.clear();
+        }
         if (this.currentOperand.length > 14) return;
         if (number === '.' && this.currentOperand.includes('.')) return;
         this.currentOperand = this.currentOperand.toString() + number.toString();
