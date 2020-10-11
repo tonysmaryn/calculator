@@ -5,6 +5,7 @@ class Calculator {
         this.clear();
         this.currentOperand = '';
         this.isComputed = false;
+        this.isFraction = false;
     }
 
     clear() {
@@ -12,6 +13,7 @@ class Calculator {
         this.currentOperand = '';
         this.operation = undefined;
         this.isComputed = false;
+        this.isFraction = false;
     }
 
     delete() {
@@ -25,6 +27,7 @@ class Calculator {
         }
         if (this.currentOperand.length > 14) return;
         if (number === '.' && this.currentOperand.includes('.')) return;
+        if (number === '.') this.isFraction = true;
         this.currentOperand = this.currentOperand.toString() + number.toString();
     }
 
@@ -99,7 +102,11 @@ class Calculator {
             default:
                 return;
         }
-        this.currentOperand = computation.toFixed(10).replace(/0*$/, '');
+        if (this.isFraction){
+            this.currentOperand = computation.toFixed(10).replace(/0*$/, '');
+        } else {
+            this.currentOperand = computation;
+        }
         this.previousOperand = '';
         this.operation = undefined;
     }
