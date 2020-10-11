@@ -22,7 +22,7 @@ class Calculator {
     }
 
     appendNumber(number) {
-        if (this.isComputed){
+        if (this.isComputed) {
             this.clear();
         }
         if (this.currentOperand.length > 14) return;
@@ -102,7 +102,7 @@ class Calculator {
             default:
                 return;
         }
-        if (this.isFraction){
+        if (this.isFraction) {
             this.currentOperand = computation.toFixed(10).replace(/0*$/, '');
         } else {
             this.currentOperand = computation;
@@ -155,12 +155,13 @@ class Calculator {
     }
 
     signed() {
+        if (this.isComputed) return;
         if (this.currentOperand !== '') {
             this.currentOperand = parseFloat(this.currentOperand) * (-1);
         }
     }
 
-    setIsComputed(){
+    setIsComputed() {
         this.isComputed = true;
     }
 }

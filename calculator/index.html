@@ -8,34 +8,45 @@
     <script src="script.js" defer></script>
   </head>
   <body>
-    <div class="calculator-grid">
-      <div class="output">
-        <div data-previous-operand class="previous-operand"></div>
-        <div data-current-operand class="current-operand"></div>
+    <div class="wrapper">
+      <div class="calculator-grid">
+        <div class="output">
+          <div data-previous-operand class="previous-operand"></div>
+          <div data-current-operand class="current-operand"></div>
+        </div>
+        <button data-current-clear>CE</button>
+        <button data-all-clear>C</button>
+        <button data-delete>DEL</button>
+        <button data-operation>^</button>
+        <button data-operation>√</button>
+        <button data-number>1</button>
+        <button data-number>2</button>
+        <button data-number>3</button>
+        <button data-operation>+</button>
+        <button data-operation>-</button>
+        <button data-number>4</button>
+        <button data-number>5</button>
+        <button data-number>6</button>
+        <button data-operation>*</button>
+        <button data-operation>÷</button>
+        <button data-number>7</button>
+        <button data-number>8</button>
+        <button data-number>9</button>
+        <button data-sign>±</button>
+        <button data-number>0</button>
+        <button data-number>.</button>
+        <button data-equals class="square">=</button>
       </div>
-      <button data-current-clear>CE</button>
-      <button data-all-clear>C</button>
-      <button data-delete>DEL</button>
-      <button data-operation>^</button>
-      <button data-operation>√</button>
-      <button data-number>1</button>
-      <button data-number>2</button>
-      <button data-number>3</button>
-      <button data-operation>+</button>
-      <button data-operation>-</button>
-      <button data-number>4</button>
-      <button data-number>5</button>
-      <button data-number>6</button>
-      <button data-operation>*</button>
-      <button data-operation>÷</button>
-      <button data-number>7</button>
-      <button data-number>8</button>
-      <button data-number>9</button>
-      <button data-sign>±</button>
-      <button data-number>0</button>
-      <button data-number>.</button>
-      <button data-equals class="square">=</button>
-      
+      <div class="description">
+        <h1>Инструкция</h1>
+        <ul>
+          <li>Для вычисления квадратного корня сначала вводим число, затем жмем <strong>√</strong></li>
+          <li>Для ввода отрицательных значений сначала вводим число, затем жмем <strong>±</strong></li>
+          <li>Кнопка DEL удаляет последнюю введенную цифру</li>
+          <li>Кнопка СЕ обнуляет текущий ввод</li>
+          <li>Кнопка С сбрасывает калькулятор полностью</li>
+        </ul>
+      </div>
     </div>
   </body>
 </html>
