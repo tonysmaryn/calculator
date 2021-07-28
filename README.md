@@ -1,2 +1,4 @@
-# tonysmaryn-JS2020Q3
-Private repository for @tonysmaryn
+# Calculator
+Simple calculator on PureJS
+
+Deploy: https://tonysmaryn.github.io/calculator/calculator/
